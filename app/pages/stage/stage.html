@@ -1,0 +1,169 @@
+<!--
+  Generated template for the StagePage page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<!--
+  Generated template for the ChampionshipPage page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar hideBackButton no-border primary>
+    <button menuToggle>
+      <ion-icon name='menu'></ion-icon>
+    </button>
+    <ion-title (click)="openAllStagesModal()">
+      {{stage.name}}
+      <ion-icon name="arrow-dropdown"></ion-icon>
+    </ion-title>
+    <ion-buttons end>
+      <button royal (click)="backToChampionship()">
+        voltar
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+  <!-- Segment buttons with text -->
+  <ion-toolbar [attr.primary]="isAndroid ? '' : null" no-border-top>
+    <ion-segment no-padding [attr.light]="isAndroid ? '' : null" [(ngModel)]="stageSegment">
+      <ion-segment-button value="info">
+        Informações
+      </ion-segment-button>
+      <ion-segment-button value="matches">
+        Partidas
+      </ion-segment-button>
+      <ion-segment-button value="groups">
+        Grupos
+      </ion-segment-button>
+      <ion-segment-button value="scores">
+        Placar
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content fullscreen>
+
+  <div [ngSwitch]="stageSegment">
+    <div class="infoTab" *ngSwitchCase="'info'">
+      <ion-grid>
+        <ion-row class="data-grid">
+          <ion-col width-50 text-center padding>
+            <ion-icon name="information-circle" primary></ion-icon>
+            <h4>Campeonato</h4>
+            <p>{{stage.championship.name}}</p>
+          </ion-col>
+          <ion-col width-50 text-center padding>
+            <ion-icon name="walk" primary></ion-icon>
+            <h4>Status</h4>
+            <p>{{ stage.step }}</p>
+          </ion-col>
+        </ion-row>
+        <ion-row class="data-grid">
+          <ion-col width-50 text-center padding>
+            <ion-icon name="pin" primary></ion-icon>
+            <h4>Local</h4>
+            <p>{{stage.venue.name}}</p>
+          </ion-col>
+          <ion-col width-50 text-center padding>
+            <ion-icon name="calendar" primary></ion-icon>
+            <h4>Data</h4>
+            <p>{{ stage.event_on | date: 'dd/MM/y' }}</p>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+
+    <div *ngSwitchCase="'matches'">
+      <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+      </ion-refresher>
+      <ion-card *ngFor="let m of stage.matches let i = index" class="match">
+        <ion-card-content no-padding>
+          <ion-grid>
+            <ion-row>
+              <ion-col width-100>
+                <ion-note>{{ i+1 }} - {{m.group.name}}</ion-note>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col width-33 text-center class="team team1 {{ m.team1.id == m.winner_id ? 'winner' : '' }}">
+                <div class="name">{{m.team1.name}}</div>
+                <div class="points">{{m.team1.points}}</div>
+              </ion-col>
+              <ion-col width-33 class="vs" text-center>
+                <span class="team1-deaths team-deaths">
+                  {{ m.team1.deaths}}
+                </span>
+                X
+                <span class="team2-deaths team-deaths">
+                  {{ m.team2.deaths}}
+                </span>
+              </ion-col>
+              <ion-col width-33 text-center class="team team2 {{ m.team2.id == m.winner_id ? 'winner' : '' }}">
+                <div class="name">{{m.team2.name}}</div>
+                <div class="points">{{m.team2.points}}</div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+      </ion-card>
+    </div>
+
+    <div *ngSwitchCase="'groups'">
+      <ion-card *ngFor="let g of stage.groups" class="group">
+        <ion-card-header>
+          {{g.name}}
+        </ion-card-header>
+        <ion-card-content>
+          <table>
+            <thead>
+              <tr>
+                <th class="team">Time</th>
+                <th class="bonus">B</th>
+                <th class="ved">V / E / D</th>
+                <th class="kd">K / D</th>
+                <th class="pts">Pts</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let s of g.scores">
+                <td class="team">{{s.team.name}}</td>
+                <td class="bonus">{{s.bonus_points}}</td>
+                <td class="ved">{{s.wins}} / {{s.draws}} / {{s.defeats}}</td>
+                <td class="kd">{{s.kills}} / {{s.deaths}}</td>
+                <td class="pts">{{s.points}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </ion-card-content>
+      </ion-card>
+    </div>
+
+    <div *ngSwitchCase="'scores'">
+      <ion-list>
+        <ion-item *ngFor="let s of stage.scores">
+          <h2>{{s.position}} - {{s.team.name}}</h2>
+          <p>
+            <ion-grid>
+              <ion-row>
+                <ion-col width-50>
+                  <strong>V/D/E:</strong> {{s.wins}} / {{s.draws}} / {{s.defeats}}
+                </ion-col>
+                <ion-col>
+                  <strong>K/D:</strong> {{s.kills}} / {{s.deaths}}
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </p>
+          <h2 item-right>{{ s.points }}</h2>
+        </ion-item>
+      </ion-list>
+    </div>
+  </div>
+
+</ion-content>

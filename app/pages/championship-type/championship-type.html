@@ -1,0 +1,92 @@
+<!--
+  Generated template for the ChampionshipTypePage page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar hideBackButton no-border primary>
+    <button menuToggle>
+      <ion-icon name='menu'></ion-icon>
+    </button>
+    <ion-title>{{chamType.name}}</ion-title>
+  </ion-navbar>
+
+  <!-- Segment buttons with text -->
+  <ion-toolbar [attr.primary]="isAndroid ? '' : null" no-border-top>
+    <ion-segment no-padding [attr.light]="isAndroid ? '' : null" [(ngModel)]="chamTypeSegment">
+      <ion-segment-button value="info">
+        Informações
+      </ion-segment-button>
+      <ion-segment-button value="editions">
+        Edições
+      </ion-segment-button>
+      <ion-segment-button value="stats">
+        Estatísticas
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content fullscreen>
+  <div [ngSwitch]="chamTypeSegment">
+    <div class="infoTab" *ngSwitchCase="'info'">
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <h3>{{chamType.fullname}}</h3>
+          </ion-col>
+        </ion-row>
+        <ion-row class="data-grid">
+          <ion-col width-50 text-center padding>
+            <ion-icon name="information-circle" primary></ion-icon>
+            <h4>Apelido</h4>
+            <p>{{chamType.name}}</p>
+          </ion-col>
+          <ion-col width-50 text-center padding>
+            <ion-icon name="pin" primary></ion-icon>
+            <h4>UF</h4>
+            <p>{{chamType.uf}}</p>
+          </ion-col>
+        </ion-row>
+        <ion-row class="data-grid">
+          <ion-col width-50 text-center padding (click)="openWebSite(chamType.website)">
+            <ion-icon name="link" primary></ion-icon>
+            <h4>Website</h4>
+            <p>{{ chamType.website }}</p>
+          </ion-col>
+          <ion-col width-50 text-center padding>
+            <ion-icon name="walk" primary></ion-icon>
+            <h4>Modalidade</h4>
+            <p>{{ chamType.modality }}</p>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="description">{{ chamType.description }}</ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+    <div *ngSwitchCase="'editions'" >
+      <ion-card *ngFor="let c of chamType.championships">
+        <ion-item>
+          <h2>{{c.name}}</h2>
+          <p>{{c.reference_date | date: 'dd/MM/y'}}</p>
+        </ion-item>
+        <ion-card-content>
+          <p>{{c.step}}</p>
+        </ion-card-content>
+
+        <ion-row>
+          <ion-col>
+            <button primary clear small (click)="showChampionship(c)">
+              <div>Mais Informações</div>
+            </button>
+          </ion-col>
+        </ion-row>
+
+      </ion-card>
+    </div>
+  </div>
+
+</ion-content>

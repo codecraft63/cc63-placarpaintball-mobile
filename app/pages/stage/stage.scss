@@ -1,0 +1,54 @@
+.stage-page {
+  .group {
+    table {
+      width: 100%;
+
+      th,td {
+        text-align: center;
+      }
+
+      tbody tr:nth-child(odd) {
+        background-color: color($colors, light);
+      }
+
+      .team {
+        text-align: left;
+        width: 30%;
+      }
+      .bonus {
+        width: 10%;
+      }
+      .ved {
+        width: 20%;
+      }
+      .kd {
+        width: 20%;
+      }
+      .pts {
+        width: 20%;
+      }
+    }
+  }
+
+  .match {
+    .team {
+      .name {
+        font-size: 16px;
+      }
+    }
+
+    .vs {
+      width: 100%;
+      .team-deaths {
+        width: 40%;
+        display: inline-block;
+        text-align: center;
+        font-size: 24px;
+      }
+    }
+
+    .winner {
+      text-shadow: 0 0 7px;
+    }
+  }
+}
