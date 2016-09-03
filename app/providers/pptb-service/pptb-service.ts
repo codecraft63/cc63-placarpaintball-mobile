@@ -14,8 +14,8 @@ export class PptbService {
   private cache: any = {};
 
   constructor(private http: Http) {
-    // this.urlBase = 'http://www.placarpaintball.com.br';
-    this.urlBase = 'http://localhost:3000';
+    this.urlBase = 'http://www.placarpaintball.com.br';
+    // this.urlBase = 'http://localhost:3000';
   }
 
 
