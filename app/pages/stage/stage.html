@@ -20,6 +20,9 @@
       <ion-icon name="arrow-dropdown"></ion-icon>
     </ion-title>
     <ion-buttons end>
+      <button (click)="toggleFavorite()">
+        <ion-icon name='heart' isActive="{{isFavorited()}}"></ion-icon>
+      </button>
       <button royal (click)="backToChampionship()">
         voltar
       </button>
@@ -152,7 +155,7 @@
             <ion-grid>
               <ion-row>
                 <ion-col width-50>
-                  <strong>V/D/E:</strong> {{s.wins}} / {{s.draws}} / {{s.defeats}}
+                  <strong>V/E/D:</strong> {{s.wins}} / {{s.draws}} / {{s.defeats}}
                 </ion-col>
                 <ion-col>
                   <strong>K/D:</strong> {{s.kills}} / {{s.deaths}}
